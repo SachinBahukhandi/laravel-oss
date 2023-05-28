@@ -1,5 +1,7 @@
 <?php
 
+use App\Admin\Controllers\HomeController;
+use App\Admin\Controllers\UserController;
 use Illuminate\Routing\Router;
 
 Admin::routes();
@@ -11,6 +13,7 @@ Route::group([
     'as'            => config('admin.route.prefix') . '.',
 ], function (Router $router) {
 
-    $router->get('/', 'HomeController@index')->name('home');
-
+    $router->get('/', [HomeController::class, 'index'])->name('home');
+    $router->get('/users/form', [HomeController::class, 'former'])->name('form');
+    $router->resource('users', UserController::class);
 });

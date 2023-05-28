@@ -12,6 +12,10 @@
         {
             "type": "path",
             "url": "/var/www/open-source/libs/open-admin"
+        },
+        {
+            "type": "path",
+            "url": "/var/www/open-source/libs/helpers"
         }
     ],
     "require": {
@@ -30,7 +34,8 @@
         "nunomaduro/collision": "^7.0",
         "phpunit/phpunit": "^10.0",
         "spatie/laravel-ignition": "^2.0",
-        "open-admin-org/open-admin":"dev-main"
+        "open-admin-org/open-admin":"dev-main",
+        "open-admin-ext/helpers":"dev-main"
     },
     "autoload": {
         "psr-4": {
