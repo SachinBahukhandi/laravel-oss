@@ -14,6 +14,7 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', [HomeController::class, 'index'])->name('home');
-    $router->get('/users/form', [HomeController::class, 'former'])->name('form');
+    $router->get('/users/form', [UserController::class, 'former'])->name('form');
     $router->resource('users', UserController::class);
+    $router->resource('names', MyNameController::class);
 });

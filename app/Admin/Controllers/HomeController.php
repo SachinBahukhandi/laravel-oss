@@ -2,35 +2,67 @@
 
 namespace App\Admin\Controllers;
 
-use App\Http\Controllers\Controller;
-use OpenAdmin\Admin\Admin;
-use OpenAdmin\Admin\Controllers\Dashboard;
-use OpenAdmin\Admin\Layout\Column;
-use OpenAdmin\Admin\Layout\Content;
-use OpenAdmin\Admin\Layout\Row;
+use App\Models\User;
+use OpenAdmin\Admin\Controllers\AdminController;
+use OpenAdmin\Admin\Form;
+use OpenAdmin\Admin\Grid;
+use OpenAdmin\Admin\Show;
 
-class HomeController extends Controller
+class HomeController extends AdminController
 {
-    public function index(Content $content)
+    protected $title = 'Users';
+
+    protected function grid()
     {
-        return $content
-            ->css_file(Admin::asset("open-admin/css/pages/dashboard.css"))
-            ->title('Dashboard')
-            ->description('Description...')
-            ->row(Dashboard::title())
-            ->row(function (Row $row) {
+        $grid = new Grid(new User());
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::environment());
-                });
+        $grid->column('id', __('Id'));
+        $grid->column('name', __('Name'));
+        $grid->column('email', __('Email'));
+        $grid->column('password', __('Password'));
+        $grid->column('created_at', __('Created at'));
+        $grid->column('updated_at', __('Updated at'));
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::extensions());
-                });
+        return $grid;
+    }
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::dependencies());
-                });
-            });
+    protected function detail($id)
+    {
+        $show = new Show(User::findOrFail($id));
+
+        $show->field('id', __('Id'));
+        $show->field('name', __('Name'));
+        $show->field('email', __('Email'));
+        $show->field('password', __('Password'));
+        $show->field('created_at', __('Created at'));
+        $show->field('updated_at', __('Updated at'));
+
+        return $show;
+    }
+
+    protected function former()
+    {
+        $form = new Form(new User());
+
+        // $form->textarea('name', __('Name'));
+        // $form->textarea('email', __('Email'));
+        // $form->textarea('password', __('Password'));
+
+        // return $form;
+        // $form = new Form();
+
+        $form->action('example');
+
+        $form->email('email')->default('qwe@aweq.com');
+        $form->password('password');
+        $form->text('name');
+        $form->url('url');
+        $form->color('color');
+        $form->map('lat', 'lng');
+        $form->date('date');
+        $form->json('val');
+        $form->dateRange('created_at', 'updated_at');
+
+        echo $form->render();
     }
 }
